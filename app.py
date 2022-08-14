@@ -1,22 +1,23 @@
+import os
+
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
-from database import init_db
-
-db = SQLAlchemy()
-
+from config.db import init_db
 
 def create_app():
-    """Construct the core application."""
+    """ Construct the core application """
     app = Flask(__name__, instance_relative_config=False)
-    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
     return app
 
 def start_server():
     app = create_app()
-    app.run(host='0.0.0.0', port=105)
-    
+    port = os.environ.get('PORT', 5000)
+    app.run(host='0.0.0.0', port=port)
+
 
 if __name__ == '__main__':
+    if not os.environ.get("PRODUCTION"):
+        from dotenv import load_dotenv
+        load_dotenv('./.env')
+    
     init_db()
     start_server()
