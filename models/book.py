@@ -6,13 +6,13 @@ class Book(Base):
     __tablename__ = 'books'
     isbn = Column(String(17), primary_key=True)
     title = Column(String(100), unique=True)
-    doc_id = Column(String(32), ForeignKey("documents.id"))
-    document = relationship("Document", back_populates="book")
+    file_id = Column(String(32), ForeignKey("files.id"))
+    file = relationship("File", uselist=False, backref="document")
 
-    def __init__(self, isbn=None, title=None, doc_id=None):
+    def __init__(self, isbn=None, title=None, file_id=None):
         self.isbn = isbn
         self.title = title
-        self.doc_id = doc_id
+        self.file_id = file_id
 
     def __repr__(self):
         return f'<Book {self.title!r}>'
