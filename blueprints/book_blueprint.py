@@ -8,3 +8,9 @@ blueprint.add_url_rule(
     view_func=book_controller.upload_book,
     methods=['POST']
 )
+
+blueprint.add_url_rule(
+    '/<string:book_id>/read',
+    view_func=book_controller.read_book,
+    methods=['GET']
+)
