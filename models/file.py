@@ -4,7 +4,7 @@ from config.db import Base
 
 class File(Base):
     __tablename__ = 'files'
-    id = Column(String(32), primary_key=True, unique=True)
+    id = Column(String(36), primary_key=True, unique=True)
     format = Column(String(50))
     
     def __init__(self, id=None, format=None):
