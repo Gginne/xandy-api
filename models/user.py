@@ -11,7 +11,7 @@ class User(Base):
     email = Column(String(50), unique=True)
     password = Column(String(50))
 
-    def __init__(self, id=None,name=None, email=None, password=None):
+    def __init__(self, id=None, name=None, email=None, password=None):
         self.id = id
         self.name = name
         self.email = email
