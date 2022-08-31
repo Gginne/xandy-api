@@ -43,6 +43,7 @@ def _upload_file_to_s3(file, file_id):
     print("Uploaded {}".format(file.filename))
     return True
 
+
 def upload_book():
     
     
@@ -81,3 +82,28 @@ def read_book(book_id):
     ).one()
     
     return _load_file_from_s3(q_book.file_id)
+
+
+def _serialize_book(book_obj):
+    return {
+        'id': book_obj.id,
+        'isbn': book_obj.isbn,
+        'title': book_obj.title
+    }
+    
+def search_books():
+    
+    q_title = f"%{request.args.get('title')}%"
+    
+    books = session.query(
+        book.Book
+    ).filter(
+        book.Book.title.like(q_title)
+    ).all()
+    
+    books = [_serialize_book(b) for b in books]
+
+    return jsonify(books)
+    
+    
+        

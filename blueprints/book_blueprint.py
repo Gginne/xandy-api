@@ -10,6 +10,12 @@ blueprint.add_url_rule(
 )
 
 blueprint.add_url_rule(
+    '/search',
+    view_func=book_controller.search_books,
+    methods=['GET']
+)
+
+blueprint.add_url_rule(
     '/<string:book_id>/read',
     view_func=book_controller.read_book,
     methods=['GET']
