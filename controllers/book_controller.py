@@ -1,5 +1,6 @@
 import boto3
 from flask import request,jsonify,make_response
+from sqlalchemy import and_
 from werkzeug.utils import secure_filename
 
 import os
@@ -10,7 +11,8 @@ from models import book, file
 from utils import auth
 
 
-def upload_book():
+@auth.token_required
+def upload_book(user):
     
     data = dict(request.form)
     data['file'] = request.files.get("file")
@@ -20,7 +22,7 @@ def upload_book():
     # Create document row from data and assign uuid as id
     new_file = file.File(id=file_id, format='PDF')
     # Create book row from data
-    new_book = book.Book(id=book_id, title=data['title'], isbn=data['isbn'], file_id=file_id)
+    new_book = book.Book(id=book_id, title=data['title'], isbn=data['isbn'], file_id=file_id, user_id=user.id)
     
     #Add file and new book
     session.add(new_file)
@@ -38,14 +40,19 @@ def upload_book():
     }), 500)
 
 
-def read_book(book_id): 
-    
+@auth.token_required
+def read_book(user, book_id): 
+
     q_book = session.query(
         book.Book
     ).filter(
-        book.Book.id == book_id
-    ).one()
+        and_(book.Book.id == book_id, book.Book.user_id == user.id)
+    ).first()
     
+    if q_book == None:
+        return make_response(jsonify({
+            "message": 'book not found',
+        }), 404)
     
     book_file = None
     
@@ -61,14 +68,15 @@ def read_book(book_id):
     return response
 
 
-def search_books():
+@auth.token_required
+def search_books(user):
     
     q_title = f"%{request.args.get('title')}%"
     
     books = session.query(
         book.Book
     ).filter(
-        book.Book.title.like(q_title)
+        and_(book.Book.title.like(q_title), book.Book.user_id == user.id)
     ).all()
     
     books = [_serialize_book(b) for b in books]
