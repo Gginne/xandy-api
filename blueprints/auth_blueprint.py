@@ -9,3 +9,11 @@ blueprint.add_url_rule(
     methods=['POST']
 )
 
+blueprint.add_url_rule(
+    '/login',
+    view_func=auth_controller.login_user,
+    methods=['POST']
+)
+
+
+
