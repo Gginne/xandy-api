@@ -2,7 +2,7 @@ import os
 
 from flask import Flask
 from config.db import init_db
-from blueprints import book_blueprint
+from blueprints import auth_blueprint, book_blueprint
 
 def create_app():
     # Construct the core application 
@@ -13,6 +13,7 @@ def create_app():
     return app
 
 def register_blueprints(app):
+    app.register_blueprint(auth_blueprint.blueprint, url_prefix='/auth')
     app.register_blueprint(book_blueprint.blueprint, url_prefix='/book')
     
 def start_server():

@@ -9,13 +9,17 @@ class Book(Base):
     isbn = Column(String(13), unique=True)
     title = Column(String(100), unique=True)
     file_id = Column(String(36), ForeignKey("files.id"))
-    file = relationship("File", uselist=False, backref="document")
+    user_id = Column(String(36), ForeignKey("users.id"))
+    
+    file = relationship("File", uselist=False, backref="book")
+    user = relationship("User", uselist=False, backref="book")
 
-    def __init__(self, id=None,isbn=None, title=None, file_id=None):
+    def __init__(self, id=None,isbn=None, title=None, file_id=None, user_id=None):
         self.id = id
         self.isbn = isbn
         self.title = title
         self.file_id = file_id
+        self.user_id = user_id
 
     def __repr__(self):
         return f"<Book '{self.title}'>"

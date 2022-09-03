@@ -17,4 +17,5 @@ def init_db():
     # Import models
     import models.file
     import models.book
+    import models.user
     Base.metadata.create_all(bind=engine)
