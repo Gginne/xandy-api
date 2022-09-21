@@ -1,7 +1,6 @@
 import email
 from enum import unique
-from sqlalchemy import Column, ForeignKey, String
-from sqlalchemy.orm import relationship
+from sqlalchemy import Column, String
 from config.db import Base
 
 class User(Base):
@@ -19,4 +18,4 @@ class User(Base):
         
 
     def __repr__(self):
-        return f"<User '{self.id}'>"
+        return f"<User '{self.name}' : {self.id}>"

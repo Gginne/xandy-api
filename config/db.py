@@ -18,4 +18,6 @@ def init_db():
     import models.file
     import models.book
     import models.user
+    import models.collection
+    import models.book_collection
     Base.metadata.create_all(bind=engine)

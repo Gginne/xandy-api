@@ -13,6 +13,7 @@ class Book(Base):
     
     file = relationship("File", uselist=False, backref="book")
     user = relationship("User", uselist=False, backref="book")
+    collections = relationship("BookCollection",  back_populates="book")
 
     def __init__(self, id=None,isbn=None, title=None, file_id=None, user_id=None):
         self.id = id
