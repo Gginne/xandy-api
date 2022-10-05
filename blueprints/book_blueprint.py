@@ -1,7 +1,7 @@
 import flask
 from controllers import book_controller
 
-blueprint = flask.Blueprint('book', __name__)
+blueprint = flask.Blueprint('books', __name__)
 
 blueprint.add_url_rule(
     '/upload',

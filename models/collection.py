@@ -10,8 +10,8 @@ class Collection(Base):
     name = Column(String(50), unique=True)
     user_id = Column(String(36), ForeignKey("users.id"))
     
-    books = relationship("BookCollection",  back_populates="collection")
-    user = relationship("User", uselist=False, backref="collection")
+    books = relationship("Book",  secondary="book_collections", back_populates="collections")
+    user = relationship("User", uselist=False, backref="collections")
     
     def __init__(self, id=None, name=None, user_id=None):
         self.user_id = user_id

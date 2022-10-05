@@ -14,8 +14,8 @@ def create_app():
 
 def register_blueprints(app):
     app.register_blueprint(auth_blueprint.blueprint, url_prefix='/auth')
-    app.register_blueprint(book_blueprint.blueprint, url_prefix='/book')
-    app.register_blueprint(collection_blueprint.blueprint, url_prefix='/collection')
+    app.register_blueprint(book_blueprint.blueprint, url_prefix='/books')
+    app.register_blueprint(collection_blueprint.blueprint, url_prefix='/collections')
     
 def start_server():
     app = create_app()

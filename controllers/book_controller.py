@@ -71,7 +71,7 @@ def read_book(user, book_id):
 @auth.token_required
 def search_books(user):
     
-    q_title = f"%{request.args.get('title')}%"
+    q_title = f"%{request.args.get('q')}%"
     
     books = session.query(
         book.Book
@@ -82,7 +82,6 @@ def search_books(user):
     books = [_serialize_book(b) for b in books]
 
     return make_response(jsonify(books))
-
 
     
 def _serialize_book(book_obj):
